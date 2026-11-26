@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STOP BULLYING – BERANI PEDULI, BERANI BERTINDAK!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #ff9a9e;
+      --bg-2: #fecfef;
+      --bg-3: #a1c4fd;
+      --accent-1: #ff6b8b;
+      --accent-2: #ffb703;
+      --accent-3: #06d6a0;
+      --accent-4: #4cc9f0;
+      --card-bg: rgba(255, 255, 255, 0.97);
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      background-size: 260% 260%;
+      animation: bgShift 14s ease infinite;
+      color: #1e293b;
+      overflow-x: hidden;
+      position: relative;
+      transition: background 0.7s ease;
+    }
+
+    body.urgent-pulse {
+      animation: urgentScreenPulse 0.65s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes urgentScreenPulse {
+      0% { box-shadow: inset 0 0 0px rgba(244, 63, 94, 0); }
+      100% { box-shadow: inset 0 0 65px rgba(244, 63, 94, 0.55); }
+    }
+
+    /* CUTE FLOATING STICKERS */
+    .floating-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.42;
+      font-size: clamp(2.1rem, 4.2vw, 3.6rem);
+      animation: floatShape linear infinite;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.12));
+    }
+
+    @keyframes floatShape {
+      0% {
+        transform: translateY(105vh) rotate(-12deg) scale(0.9);
+      }
+      50% {
+        transform: translateY(48vh) rotate(14deg) scale(1.12);
+      }
+      100% {
+        transform: translateY(-15vh) rotate(-10deg) scale(0.95);
+      }
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 60;
+    }
+
+    .app-wrapper {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 830px;
+      animation: popIn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(18px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* START SCREEN - SUPER CLEAN & CUTE */
+    .start-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 4px solid #ffffff;
+      border-radius: 36px;
+      padding: 46px 32px;
+      text-align: center;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.18);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .start-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+      font-weight: 700;
+      line-height: 1.22;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      background: linear-gradient(90deg, #ff477e, #ff9e00, #06d6a0, #3a86ff);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shineText 5s linear infinite;
+    }
+
+    @keyframes shineText {
+      to { background-position: 200% center; }
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 17px 22px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: inherit;
+      color: #1e293b;
+      background: #ffffff;
+      border: 3px solid #cbd5e1;
+      border-radius: 22px;
+      outline: none;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      transition: all 0.25s ease;
+      margin-bottom: 18px;
+    }
+
+    .name-input::placeholder {
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .name-input:focus {
+      border-color: #ff6b8b;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(255, 107, 139, 0.25);
+    }
+
+    .btn-start {
+      width: 100%;
+      padding: 17px 26px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      background: linear-gradient(135deg, #ff6b8b 0%, #ff9e00 100%);
+      border: none;
+      border-radius: 22px;
+      cursor: pointer;
+      box-shadow: 0 7px 0 #d94862, 0 15px 28px rgba(255, 107, 139, 0.35);
+      transition: all 0.16s ease;
+    }
+
+    .btn-start:hover {
+      filter: brightness(1.04);
+      transform: translateY(-2px);
+      box-shadow: 0 9px 0 #d94862, 0 18px 34px rgba(255, 107, 139, 0.45);
+    }
+
+    .btn-start:active {
+      transform: translateY(5px);
+      box-shadow: 0 2px 0 #d94862, 0 6px 14px rgba(255, 107, 139, 0.3);
+    }
+
+    .error-msg {
+      color: #be123c;
+      background: #ffe4e6;
+      border: 2px solid #fda4af;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    /* QUIZ TOP BAR */
+    .top-hud {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hud-pill {
+      background: rgba(255, 255, 255, 0.92);
+      color: #1e293b;
+      border: 2.5px solid #ffffff;
+      padding: 9px 16px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 800;
+      font-size: 0.94rem;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+    }
+
+    .streak-pill.hot {
+      background: linear-gradient(135deg, #ff9e00, #ff477e);
+      color: #ffffff;
+      border-color: #fde047;
+      animation: streakBounce 0.9s infinite alternate;
+    }
+
+    @keyframes streakBounce {
+      from { transform: scale(1); }
+      to { transform: scale(1.06); }
+    }
+
+    .sound-btn {
+      background: rgba(255, 255, 255, 0.92);
+      border: 2.5px solid #ffffff;
+      color: #1e293b;
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+      transition: 0.2s;
+    }
+
+    .sound-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    /* TIMER & PROGRESS BAR (45 MINUTES TOTAL) */
+    .timer-container {
+      background: rgba(255, 255, 255, 0.92);
+      border: 3px solid #ffffff;
+      border-radius: 24px;
+      padding: 13px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    .timer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .theme-badge {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #b45309;
+      border: 2px solid #fde68a;
+      letter-spacing: 0.3px;
+    }
+
+    .timer-readout {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0284c7;
+      background: #e0f2fe;
+      padding: 4px 14px;
+      border-radius: 999px;
+      border: 2px solid #bae6fd;
+      transition: transform 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .timer-readout.danger {
+      color: #ffffff;
+      background: #e11d48;
+      border-color: #fecdd3;
+      transform: scale(1.12);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 14px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      padding: 2px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #06d6a0, #ffd166, #ff6b8b);
+      transition: width 0.2s linear, background 0.3s ease;
+    }
+
+    .progress-fill.danger {
+      background: linear-gradient(90deg, #e11d48, #fb923c);
+    }
+
+    /* 5-SECOND WARNING BANNER & COUNTDOWN */
+    .urgent-banner {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(90deg, #e11d48, #f97316, #e11d48);
+      background-size: 200% 100%;
+      animation: bannerSlide 0.8s linear infinite, bannerShake 0.32s ease-in-out infinite;
+      color: #fff;
+      font-weight: 800;
+      padding: 11px 18px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+      border: 3px solid #fde047;
+      box-shadow: 0 10px 25px rgba(225, 29, 72, 0.35);
+      text-align: center;
+    }
+
+    .urgent-banner.show {
+      display: flex;
+    }
+
+    @keyframes bannerSlide {
+      to { background-position: 200% 0; }
+    }
+
+    @keyframes bannerShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+
+    .countdown-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 45;
+    }
+
+    .countdown-overlay.show {
+      display: flex;
+    }
+
+    .countdown-number {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(6.5rem, 22vw, 13rem);
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 0 0 40px rgba(244, 63, 94, 0.95), 0 12px 0 #9f1239;
+      animation: countZoom 0.92s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes countZoom {
+      0% { opacity: 0; transform: scale(0.35) rotate(-8deg); }
+      35% { opacity: 1; transform: scale(1.15) rotate(3deg); }
+      100% { opacity: 0; transform: scale(1.55) rotate(0deg); }
+    }
+
+    /* QUESTION CARD */
+    .question-card {
+      background: var(--card-bg);
+      color: var(--text-dark);
+      border-radius: 30px;
+      padding: 26px 26px 24px;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.14);
+      border: 3px solid #ffffff;
+      border-top: 8px solid var(--accent-1);
+      margin-bottom: 16px;
+      transition: border-color 0.5s ease;
+    }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .q-num-badge {
+      background: var(--accent-1);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.92rem;
+      transition: background 0.5s ease;
+    }
+
+    .question-text {
+      font-size: clamp(1.08rem, 2.3vw, 1.32rem);
+      font-weight: 800;
+      line-height: 1.52;
+      color: #1e293b;
+    }
+
+    /* CUTE QUIZIZZ OPTIONS GRID */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .opt-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 16px 18px;
+      border: 3px solid rgba(255, 255, 255, 0.55);
+      border-radius: 24px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.38;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.2s ease, opacity 0.25s ease;
+      min-height: 78px;
+    }
+
+    .opt-0 {
+      background: linear-gradient(135deg, #ff5d8f, #ff8fa3);
+      box-shadow: 0 6px 0 #c9184a, 0 12px 22px rgba(255, 93, 143, 0.28);
+    }
+
+    .opt-1 {
+      background: linear-gradient(135deg, #3a86ff, #4cc9f0);
+      box-shadow: 0 6px 0 #1d4ed8, 0 12px 22px rgba(58, 134, 255, 0.28);
+    }
+
+    .opt-2 {
+      background: linear-gradient(135deg, #ff9e00, #ffbe0b);
+      box-shadow: 0 6px 0 #b45309, 0 12px 22px rgba(255, 158, 0, 0.28);
+    }
+
+    .opt-3 {
+      background: linear-gradient(135deg, #06d6a0, #38b000);
+      box-shadow: 0 6px 0 #047857, 0 12px 22px rgba(6, 214, 160, 0.28);
+    }
+
+    .opt-btn:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.01);
+      filter: brightness(1.04);
+    }
+
+    .opt-btn:active:not(:disabled) {
+      transform: translateY(4px);
+    }
+
+    .opt-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-btn.dimmed {
+      opacity: 0.45;
+      filter: grayscale(30%);
+    }
+
+    .opt-btn.correct-highlight {
+      opacity: 1 !important;
+      filter: none !important;
+      outline: 4px solid #ffffff;
+      box-shadow: 0 0 28px rgba(6, 214, 160, 0.9), 0 6px 0 #047857;
+      animation: correctPop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .opt-btn.wrong-highlight {
+      opacity: 1 !important;
+      filter: none !important;
+      outline: 4px solid #fecdd3;
+      animation: wrongShake 0.4s ease;
+    }
+
+    @keyframes correctPop {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes wrongShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-7px); }
+      75% { transform: translateX(7px); }
+    }
+
+    .opt-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .opt-letter {
+      font-weight: 900;
+      margin-right: 4px;
+      text-transform: uppercase;
+    }
+
+    /* CELEBRATION & FEEDBACK BANNER */
+    .feedback-box {
+      margin-top: 16px;
+      border-radius: 26px;
+      padding: 20px 22px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: popIn 0.32s ease;
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.18);
+    }
+
+    .feedback-box.show {
+      display: flex;
+    }
+
+    .feedback-box.correct {
+      background: linear-gradient(135deg, #06d6a0, #10b981);
+      border: 3px solid #ffffff;
+      color: #fff;
+    }
+
+    .feedback-box.wrong {
+      background: linear-gradient(135deg, #ff477e, #e11d48);
+      border: 3px solid #ffffff;
+      color: #fff;
+    }
+
+    .feedback-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .celebration-emoji {
+      font-size: 2.8rem;
+      line-height: 1;
+      animation: emojiDance 0.85s ease infinite alternate;
+    }
+
+    @keyframes emojiDance {
+      from { transform: scale(1) rotate(-8deg); }
+      to { transform: scale(1.18) rotate(10deg); }
+    }
+
+    .feedback-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .feedback-sub {
+      font-size: 0.95rem;
+      font-weight: 700;
+      opacity: 0.98;
+    }
+
+    .btn-next {
+      background: #ffffff;
+      color: #1e293b;
+      border: none;
+      padding: 13px 22px;
+      border-radius: 18px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 0 rgba(15, 23, 42, 0.18);
+      transition: transform 0.15s ease, filter 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-next:hover {
+      filter: brightness(0.97);
+      transform: translateY(-2px);
+    }
+
+    .btn-next:active {
+      transform: translateY(3px);
+    }
+
+    /* RESULT SCREEN */
+    .result-card {
+      background: rgba(255, 255, 255, 0.96);
+      color: #1e293b;
+      border-radius: 36px;
+      padding: 36px 28px;
+      text-align: center;
+      border: 4px solid #ffffff;
+      box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
+    }
+
+    .result-trophy {
+      font-size: 4.2rem;
+      margin-bottom: 10px;
+      animation: emojiDance 1.1s ease infinite alternate;
+    }
+
+    .result-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    .result-player {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: #ff477e;
+      margin-bottom: 22px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 540px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border-radius: 22px;
+      padding: 16px 12px;
+      border: 2.5px solid #e2e8f0;
+    }
+
+    .stat-val {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .review-list {
+      text-align: left;
+      max-height: 310px;
+      overflow-y: auto;
+      padding-right: 6px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .review-item {
+      padding: 13px 16px;
+      border-radius: 18px;
+      border-left: 6px solid #06d6a0;
+      background: #f0fdf4;
+      border-top: 1px solid #dcfce7;
+      border-right: 1px solid #dcfce7;
+      border-bottom: 1px solid #dcfce7;
+      font-size: 0.9rem;
+    }
+
+    .review-item.is-wrong {
+      border-left-color: #ff477e;
+      background: #fff1f2;
+      border-color: #ffe4e6;
+    }
+
+    .btn-replay {
+      background: linear-gradient(135deg, #ff6b8b, #ff9e00);
+      color: #fff;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 22px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 0 #d94862, 0 14px 28px rgba(255, 107, 139, 0.35);
+      transition: transform 0.15s ease;
+    }
+
+    .btn-replay:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-replay:active {
+      transform: translateY(4px);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+  <div class="floating-shapes" id="floatingShapes"></div>
+
+  <div class="countdown-overlay" id="countdownOverlay">
+    <div class="countdown-number" id="countdownNumber">5</div>
+  </div>
+
+  <div class="app-wrapper">
+    <!-- HALAMAN DEPAN BERSIH: HANYA JUDUL, NAMA, DAN TOMBOL MULAI -->
+    <section class="screen active" id="startScreen">
+      <div class="start-card">
+        <h1 class="start-title">STOP BULLYING – BERANI PEDULI, BERANI BERTINDAK!</h1>
+        <div class="error-msg" id="nameError">Yuk tulis namamu dulu sebelum mulai! 😊</div>
+        <input
+          type="text"
+          id="playerNameInput"
+          class="name-input"
+          placeholder="Tulis nama kamu di sini..."
+          maxlength="40"
+          autocomplete="off"
+        />
+        <button class="btn-start" id="startBtn">MULAI KUIS 🚀</button>
+      </div>
+    </section>
+
+    <!-- HALAMAN KUIS -->
+    <section class="screen" id="quizScreen">
+      <div class="top-hud">
+        <div class="hud-pill">🧸 <span id="hudName">Peserta</span></div>
+        <div class="hud-pill">⭐ <span id="hudScore">0</span> Poin</div>
+        <div class="hud-pill streak-pill" id="streakPill">🔥 Streak: <span id="hudStreak">0</span></div>
+        <button class="sound-btn" id="soundToggle" title="Suara Efek">🔊 Suara ON</button>
+      </div>
+
+      <div class="timer-container">
+        <div class="timer-header">
+          <span class="theme-badge" id="themeBadge">🍭 Permen Pelangi</span>
+          <span class="timer-readout" id="timerText">⏳ 45:00</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressBar"></div>
+        </div>
+      </div>
+
+      <div class="urgent-banner" id="urgentBanner">
+        <span>⏰ WAKTU TINGGAL 5 DETIK LAGI! AYO SEGERA SELESAIKAN!</span>
+      </div>
+
+      <div class="question-card" id="questionCard">
+        <div class="question-meta">
+          <span class="q-num-badge" id="qCounter">Soal 1 / 20</span>
+          <span>5 Poin / Soal ✨</span>
+        </div>
+        <div class="question-text" id="questionText">Memuat pertanyaan...</div>
+      </div>
+
+      <div class="options-grid" id="optionsGrid"></div>
+
+      <div class="feedback-box" id="feedbackBox">
+        <div class="feedback-left">
+          <div class="celebration-emoji" id="feedbackEmoji">🎉</div>
+          <div>
+            <div class="feedback-title" id="feedbackTitle">Selamat!</div>
+            <div class="feedback-sub" id="feedbackSub">Jawabanmu mantap!</div>
+          </div>
+        </div>
+        <button class="btn-next" id="nextBtn">LANJUT YUK ➜</button>
+      </div>
+    </section>
+
+    <!-- HALAMAN HASIL -->
+    <section class="screen" id="resultScreen">
+      <div class="result-card">
+        <div class="result-trophy" id="resultTrophy">🏆</div>
+        <div class="result-title" id="resultHeadline">Kuis Selesai!</div>
+        <div class="result-player" id="resultPlayerName">Peserta</div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-val" id="finalScore">0</div>
+            <div class="stat-label">Total Skor (Max 100)</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="finalCorrect">0 / 20</div>
+            <div class="stat-label">Jawaban Benar</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-val" id="finalStreak">0</div>
+            <div class="stat-label">Streak Terbaik</div>
+          </div>
+        </div>
+
+        <div class="review-list" id="reviewList"></div>
+
+        <button class="btn-replay" id="replayBtn">MAIN LAGI YUK! 🎈</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const TOTAL_QUIZ_SECONDS = 45 * 60; // 45 menit (2700 detik)
+    const POINTS_PER_QUESTION = 5;
+
+    const QUESTIONS_BANK = [
+      {
+        q: "Sekelompok siswa selalu menjadikan satu temannya sebagai bahan lelucon. Meskipun korban terlihat tertawa, sebenarnya ia merasa tertekan. Mengapa tindakan tersebut dapat dikategorikan sebagai bullying?",
+        options: [
+          "Karena semua candaan termasuk bullying",
+          "Karena dilakukan oleh banyak orang",
+          "Karena perilaku tersebut merendahkan dan menyakiti korban secara berulang",
+          "Karena korban tidak berani membalas"
+        ],
+        correct: 2
+      },
+      {
+        q: "Seorang siswa tidak pernah memukul temannya, tetapi selalu mengajak teman-teman lain untuk menjauhi satu siswa tertentu. Perilaku tersebut termasuk …",
+        options: [
+          "Bullying fisik",
+          "Bullying relasional atau sosial",
+          "Bullying verbal secara langsung",
+          "Konflik biasa"
+        ],
+        correct: 1
+      },
+      {
+        q: "Apa perbedaan utama antara konflik antarteman dan bullying?",
+        options: [
+          "Konflik selalu terjadi di sekolah, sedangkan bullying terjadi di luar sekolah",
+          "Konflik melibatkan perbedaan kepentingan, sedangkan bullying melibatkan pola agresi dan ketimpangan kekuatan",
+          "Bullying hanya dilakukan oleh siswa laki-laki",
+          "Konflik selalu menyebabkan luka fisik"
+        ],
+        correct: 1
+      },
+      {
+        q: "Seorang siswa membuat akun anonim untuk menyebarkan komentar yang mempermalukan temannya. Mengapa tindakan ini termasuk cyberbullying?",
+        options: [
+          "Karena dilakukan menggunakan perangkat elektronik",
+          "Karena pelaku menggunakan identitas palsu untuk menyakiti dan mempermalukan orang lain secara daring",
+          "Karena semua akun anonim merupakan tindakan kejahatan",
+          "Karena dilakukan di luar lingkungan sekolah"
+        ],
+        correct: 1
+      },
+      {
+        q: "Seorang siswa sering diejek karena kondisi ekonomi keluarganya. Dampak psikologis yang paling mungkin terjadi jika hal tersebut terus berlangsung adalah …",
+        options: [
+          "Meningkatnya rasa percaya diri",
+          "Meningkatnya kemampuan bersosialisasi",
+          "Munculnya rasa rendah diri, kecemasan, dan menarik diri dari lingkungan sosial",
+          "Meningkatnya motivasi untuk mengejek orang lain"
+        ],
+        correct: 2
+      },
+      {
+        q: "Kamu melihat temanmu menjadi korban bullying. Pelaku adalah siswa yang cukup berpengaruh di sekolah. Tindakan paling tepat yang dapat kamu lakukan adalah …",
+        options: [
+          "Diam karena takut menjadi korban berikutnya",
+          "Membalas pelaku dengan kekerasan",
+          "Mendukung korban, mencari bantuan orang dewasa yang dipercaya, dan melaporkan kejadian",
+          "Menyebarkan kejadian tersebut di media sosial"
+        ],
+        correct: 2
+      },
+      {
+        q: "Seorang siswa mengatakan bahwa ia hanya bercanda ketika ketahuan mengejek temannya berulang kali. Bagaimana cara menilai tindakan tersebut?",
+        options: [
+          "Tidak termasuk bullying karena pelaku hanya bercanda",
+          "Termasuk bullying jika terdapat pola menyakiti, merendahkan, dan ketimpangan kekuatan",
+          "Tidak termasuk bullying jika dilakukan di depan umum",
+          "Termasuk konflik biasa karena tidak ada kekerasan fisik"
+        ],
+        correct: 1
+      },
+      {
+        q: "Dalam sebuah grup WhatsApp kelas, seorang siswa mengirimkan foto temannya yang telah diedit untuk dijadikan bahan tertawaan. Beberapa siswa ikut menyebarkannya. Siapakah yang memiliki tanggung jawab dalam kejadian tersebut?",
+        options: [
+          "Hanya pembuat foto editan",
+          "Hanya ketua kelas",
+          "Pembuat dan pihak yang turut menyebarkan atau memperkuat tindakan tersebut",
+          "Hanya korban karena mengirim foto aslinya"
+        ],
+        correct: 2
+      },
+      {
+        q: "Seorang korban bullying memilih diam dan tidak melaporkan kejadian yang dialaminya. Apa alasan yang paling mungkin menyebabkan hal tersebut?",
+        options: [
+          "Korban menikmati perlakuan tersebut",
+          "Korban takut mendapat ancaman, tidak dipercaya, atau mengalami pembalasan",
+          "Korban tidak memahami pertemanan",
+          "Korban ingin mendapatkan perhatian"
+        ],
+        correct: 1
+      },
+      {
+        q: "Seorang siswa selalu dikucilkan dari kelompok belajar karena dianggap berbeda. Tindakan tersebut dapat berdampak pada proses pendidikan korban, yaitu …",
+        options: [
+          "Meningkatkan kemampuan belajar mandiri",
+          "Menghambat partisipasi, konsentrasi, dan rasa aman dalam belajar",
+          "Membuat korban lebih mudah beradaptasi",
+          "Meningkatkan prestasi akademik secara otomatis"
+        ],
+        correct: 1
+      },
+      {
+        q: "Mengapa saksi bullying (bystander) memiliki peran penting dalam menghentikan perundungan?",
+        options: [
+          "Karena saksi dapat menentukan siapa yang salah tanpa bukti",
+          "Karena sikap saksi dapat memperkuat perilaku pelaku atau membantu menghentikannya",
+          "Karena saksi harus selalu melawan pelaku secara langsung",
+          "Karena saksi bertanggung jawab memberikan hukuman"
+        ],
+        correct: 1
+      },
+      {
+        q: "Jika seorang teman mengaku menjadi korban cyberbullying, langkah pertama yang paling tepat adalah …",
+        options: [
+          "Memintanya membalas komentar pelaku",
+          "Mengabaikan ceritanya agar tidak memperbesar masalah",
+          "Mendengarkan, memberikan dukungan, menyimpan bukti, dan membantu melaporkannya",
+          "Mengunggah kejadian tersebut agar menjadi viral"
+        ],
+        correct: 2
+      },
+      {
+        q: "Mengapa meminta korban bullying untuk sekadar bersabar bukan solusi yang tepat?",
+        options: [
+          "Karena korban harus selalu melawan",
+          "Karena tindakan tersebut dapat mengabaikan penderitaan korban dan membiarkan perundungan berlanjut",
+          "Karena semua korban harus pindah sekolah",
+          "Karena bullying tidak memiliki dampak serius"
+        ],
+        correct: 1
+      },
+      {
+        q: "Dalam penanganan bullying, mengapa sekolah perlu melindungi identitas korban?",
+        options: [
+          "Agar pelaku tidak mengetahui kejadian tersebut",
+          "Agar korban tidak perlu mendapatkan pendampingan",
+          "Untuk menjaga privasi, keamanan, dan mencegah korban mengalami stigma atau perundungan lanjutan",
+          "Agar kasus tidak perlu ditindaklanjuti"
+        ],
+        correct: 2
+      },
+      {
+        q: "Manakah tindakan yang menunjukkan pencegahan bullying secara nyata di lingkungan sekolah?",
+        options: [
+          "Membuat aturan tetapi tidak menerapkannya",
+          "Menghindari siswa yang pernah menjadi korban",
+          "Membangun budaya saling menghormati, menyediakan pelaporan aman, dan melakukan tindak lanjut",
+          "Memberikan hukuman tanpa mencari tahu kejadian"
+        ],
+        correct: 2
+      },
+      {
+        q: "Seorang siswa sering mengunggah sindiran tentang temannya di media sosial tanpa menyebut nama. Namun, semua teman sekelas mengetahui siapa yang dimaksud. Bagaimana tindakan tersebut sebaiknya dinilai?",
+        options: [
+          "Bukan bullying karena tidak menyebut nama",
+          "Dapat termasuk cyberbullying jika bertujuan merendahkan dan mempermalukan seseorang",
+          "Bukan bullying karena dilakukan melalui sindiran",
+          "Hanya termasuk hiburan media sosial"
+        ],
+        correct: 1
+      },
+      {
+        q: "Jika seorang pelaku bullying meminta maaf kepada korban, apakah masalah tersebut otomatis selesai?",
+        options: [
+          "Ya, karena permintaan maaf selalu menyelesaikan masalah",
+          "Tidak, karena perlu dilihat perubahan perilaku, keamanan korban, dan tindak lanjut yang diperlukan",
+          "Ya, jika pelaku merupakan teman dekat",
+          "Tidak, karena pelaku tidak boleh diberi kesempatan berubah"
+        ],
+        correct: 1
+      },
+      {
+        q: "Mengapa hukuman saja belum tentu efektif untuk mencegah bullying dalam jangka panjang?",
+        options: [
+          "Karena hukuman tidak boleh diberikan kepada siswa",
+          "Karena pencegahan juga membutuhkan pendidikan karakter, perubahan perilaku, pengawasan, dan budaya sekolah yang aman",
+          "Karena semua pelaku bullying tidak dapat berubah",
+          "Karena korban harus menyelesaikan masalah sendiri"
+        ],
+        correct: 1
+      },
+      {
+        q: "Jika seorang siswa melakukan bullying karena ingin diterima dalam kelompok pertemanan, pendekatan yang paling tepat adalah …",
+        options: [
+          "Membiarkannya agar diterima kelompok",
+          "Mengucilkannya dari seluruh kegiatan sekolah",
+          "Membantu siswa memahami dampak perilakunya, bertanggung jawab, dan mengembangkan cara berinteraksi yang sehat",
+          "Menyuruh korban membalas perbuatannya"
+        ],
+        correct: 2
+      },
+      {
+        q: "Sebuah sekolah ingin menciptakan lingkungan bebas bullying. Indikator keberhasilan program yang paling tepat adalah …",
+        options: [
+          "Tidak ada siswa yang berani melaporkan bullying",
+          "Sekolah tidak pernah membicarakan kasus bullying",
+          "Meningkatnya rasa aman siswa, kepedulian antarteman, dan menurunnya kejadian perundungan",
+          "Semua siswa selalu setuju satu sama lain"
+        ],
+        correct: 2
+      }
+    ];
+
+    /* TEMA LUCU & CERIA YANG BERGANTI DI SETIAP SOAL */
+    const CUTE_THEMES = [
+      {
+        name: "🍭 Permen Pelangi",
+        bg: "linear-gradient(135deg, #ff9a9e, #fecfef, #a1c4fd)",
+        accent: "#ff5d8f",
+        stickers: ["🍭", "🌈", "⭐", "🦄", "🍬", "💖"]
+      },
+      {
+        name: "🦖 Dino Petualang",
+        bg: "linear-gradient(135deg, #84fab0, #8fd3f4, #d4fc79)",
+        accent: "#059669",
+        stickers: ["🦖", "🦕", "🌿", "🥚", "🌟", "🍀"]
+      },
+      {
+        name: "🐱 Kucing Gemoy",
+        bg: "linear-gradient(135deg, #fccb90, #d57eeb, #ffecd2)",
+        accent: "#d97706",
+        stickers: ["🐱", "🐾", "🧶", "🐟", "✨", "💛"]
+      },
+      {
+        name: "🚀 Roket Luar Angkasa",
+        bg: "linear-gradient(135deg, #a18cd1, #fbc2eb, #8ec5fc)",
+        accent: "#6366f1",
+        stickers: ["🚀", "🪐", "👽", "🌟", "🛸", "🌙"]
+      },
+      {
+        name: "🍓 Es Krim Stroberi",
+        bg: "linear-gradient(135deg, #ff758c, #ff7eb3, #ffeaa7)",
+        accent: "#e11d48",
+        stickers: ["🍓", "🍦", "🧁", "🍒", "🍩", "✨"]
+      },
+      {
+        name: "🐼 Panda Ceria",
+        bg: "linear-gradient(135deg, #96e6a1, #d4fc79, #89f7fe)",
+        accent: "#0d9488",
+        stickers: ["🐼", "🎋", "🌻", "🐝", "🎈", "💚"]
+      }
+    ];
+
+    const CUTE_OPTION_ICONS = ["🐰", "🦊", "🐻", "🐨"];
+    const OPTION_LETTERS = ["A", "B", "C", "D"];
+
+    const PRAISE_EMOJIS = ["🎉", "🥳", "🌟", "🔥", "🚀", "🏆", "👏", "💯", "🤩", "🦄"];
+    const PRAISE_MESSAGES = [
+      "Yeay! Selamat {name}, jawabanmu super tepat!",
+      "Keren banget {name}! Kamu juara banget!",
+      "Mantap jiwa {name}! Terus semangat ya!",
+      "Wihh hebat {name}! Jawabanmu akurat 100%!",
+      "Luar biasa {name}! Teman peduli memang keren!"
+    ];
+
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function playTone(type) {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === "correct") {
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.09);
+          osc.frequency.setValueAtTime(783.99, now + 0.18);
+          osc.frequency.setValueAtTime(1046.5, now + 0.27);
+          gain.gain.setValueAtTime(0.18, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+          osc.start(now);
+          osc.stop(now + 0.46);
+        } else if (type === "wrong") {
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(240, now);
+          osc.frequency.linearRampToValueAtTime(140, now + 0.32);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        } else if (type === "tick") {
+          osc.type = "square";
+          osc.frequency.setValueAtTime(880, now);
+          gain.gain.setValueAtTime(0.11, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        }
+      } catch (e) {}
+    }
+
+    // Confetti effect
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+    let confettiParticles = [];
+    let confettiAnimId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function launchConfetti() {
+      const colors = ["#ff5d8f", "#ffbe0b", "#06d6a0", "#3a86ff", "#c084fc", "#fb923c"];
+      for (let i = 0; i < 100; i++) {
+        confettiParticles.push({
+          x: Math.random() * canvas.width,
+          y: -20 - Math.random() * 120,
+          w: 9 + Math.random() * 8,
+          h: 6 + Math.random() * 6,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - 0.5) * 6.5,
+          vy: 3 + Math.random() * 5,
+          rot: Math.random() * Math.PI * 2,
+          vRot: (Math.random() - 0.5) * 0.22,
+          life: 1
+        });
+      }
+      if (!confettiAnimId) {
+        renderConfetti();
+      }
+    }
+
+    function renderConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiParticles.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.08;
+        p.rot += p.vRot;
+        p.life -= 0.007;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = Math.max(0, p.life);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+
+      confettiParticles = confettiParticles.filter((p) => p.life > 0 && p.y < canvas.height + 30);
+      if (confettiParticles.length > 0) {
+        confettiAnimId = requestAnimationFrame(renderConfetti);
+      } else {
+        confettiAnimId = null;
+      }
+    }
+
+    // Floating cute stickers
+    function renderFloatingStickers(theme) {
+      const container = document.getElementById("floatingShapes");
+      container.innerHTML = "";
+      for (let i = 0; i < 14; i++) {
+        const el = document.createElement("div");
+        el.className = "shape";
+        el.textContent = theme.stickers[i % theme.stickers.length];
+        el.style.left = `${(i * 7.5 + Math.random() * 4) % 95}%`;
+        el.style.animationDuration = `${11 + (i % 6) * 2.4}s`;
+        el.style.animationDelay = `${-(i * 1.3)}s`;
+        container.appendChild(el);
+      }
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    // State
+    let playerName = "";
+    let sessionQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let streak = 0;
+    let bestStreak = 0;
+    let correctCount = 0;
+    let reviewLog = [];
+
+    let quizTimerInterval = null;
+    let quizStartTime = null;
+    let lastBeepSecond = null;
+    let answered = false;
+
+    const startScreen = document.getElementById("startScreen");
+    const quizScreen = document.getElementById("quizScreen");
+    const resultScreen = document.getElementById("resultScreen");
+    const playerNameInput = document.getElementById("playerNameInput");
+    const nameError = document.getElementById("nameError");
+    const startBtn = document.getElementById("startBtn");
+
+    const hudName = document.getElementById("hudName");
+    const hudScore = document.getElementById("hudScore");
+    const hudStreak = document.getElementById("hudStreak");
+    const streakPill = document.getElementById("streakPill");
+    const soundToggle = document.getElementById("soundToggle");
+
+    const themeBadge = document.getElementById("themeBadge");
+    const timerText = document.getElementById("timerText");
+    const progressBar = document.getElementById("progressBar");
+    const urgentBanner = document.getElementById("urgentBanner");
+    const countdownOverlay = document.getElementById("countdownOverlay");
+    const countdownNumber = document.getElementById("countdownNumber");
+
+    const questionCard = document.getElementById("questionCard");
+    const qCounter = document.getElementById("qCounter");
+    const questionText = document.getElementById("questionText");
+    const optionsGrid = document.getElementById("optionsGrid");
+
+    const feedbackBox = document.getElementById("feedbackBox");
+    const feedbackEmoji = document.getElementById("feedbackEmoji");
+    const feedbackTitle = document.getElementById("feedbackTitle");
+    const feedbackSub = document.getElementById("feedbackSub");
+    const nextBtn = document.getElementById("nextBtn");
+
+    soundToggle.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      soundToggle.textContent = soundEnabled ? "🔊 Suara ON" : "🔇 Suara OFF";
+    });
+
+    function switchScreen(target) {
+      [startScreen, quizScreen, resultScreen].forEach((s) => s.classList.remove("active"));
+      target.classList.add("active");
+    }
+
+    function buildSessionQuestions() {
+      const shuffledQuestions = shuffleArray(QUESTIONS_BANK);
+      return shuffledQuestions.map((item) => {
+        const indexedOptions = item.options.map((text, idx) => ({
+          text,
+          isCorrect: idx === item.correct
+        }));
+        const shuffledOptions = shuffleArray(indexedOptions);
+        const newCorrectIdx = shuffledOptions.findIndex((o) => o.isCorrect);
+        return {
+          q: item.q,
+          options: shuffledOptions.map((o) => o.text),
+          correct: newCorrectIdx
+        };
+      });
+    }
+
+    function formatTimeMMSS(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function clearUrgentEffects() {
+      document.body.classList.remove("urgent-pulse");
+      urgentBanner.classList.remove("show");
+      countdownOverlay.classList.remove("show");
+      timerText.classList.remove("danger");
+      progressBar.classList.remove("danger");
+    }
+
+    function showCountdownPop(num) {
+      countdownOverlay.classList.add("show");
+      countdownNumber.textContent = num;
+      countdownNumber.style.animation = "none";
+      void countdownNumber.offsetWidth;
+      countdownNumber.style.animation = "countZoom 0.9s cubic-bezier(0.16, 1, 0.3, 1)";
+    }
+
+    function startQuizTimer() {
+      clearInterval(quizTimerInterval);
+      clearUrgentEffects();
+      lastBeepSecond = null;
+      quizStartTime = Date.now();
+
+      quizTimerInterval = setInterval(() => {
+        const elapsed = (Date.now() - quizStartTime) / 1000;
+        const remaining = Math.max(0, TOTAL_QUIZ_SECONDS - elapsed);
+        const secCeil = Math.ceil(remaining);
+
+        timerText.textContent = `⏳ ${formatTimeMMSS(secCeil)}`;
+        const pct = (remaining / TOTAL_QUIZ_SECONDS) * 100;
+        progressBar.style.width = `${pct}%`;
+
+        if (secCeil <= 5 && secCeil >= 1) {
+          document.body.classList.add("urgent-pulse");
+          urgentBanner.classList.add("show");
+          timerText.classList.add("danger");
+          progressBar.classList.add("danger");
+
+          if (lastBeepSecond !== secCeil) {
+            lastBeepSecond = secCeil;
+            showCountdownPop(secCeil);
+            playTone("tick");
+          }
+        }
+
+        if (remaining <= 0) {
+          clearInterval(quizTimerInterval);
+          handleGlobalTimeout();
+        }
+      }, 200);
+    }
+
+    function startQuiz() {
+      const rawName = playerNameInput.value.trim();
+      if (!rawName) {
+        nameError.style.display = "block";
+        playerNameInput.focus();
+        return;
+      }
+      nameError.style.display = "none";
+      playerName = rawName;
+
+      sessionQuestions = buildSessionQuestions();
+      currentIndex = 0;
+      score = 0;
+      streak = 0;
+      bestStreak = 0;
+      correctCount = 0;
+      reviewLog = [];
+
+      hudName.textContent = playerName;
+      hudScore.textContent = "0";
+      hudStreak.textContent = "0";
+      streakPill.classList.remove("hot");
+
+      switchScreen(quizScreen);
+      startQuizTimer();
+      loadQuestion();
+    }
+
+    function applyQuestionTheme(index) {
+      const theme = CUTE_THEMES[index % CUTE_THEMES.length];
+      document.body.style.background = theme.bg;
+      document.body.style.backgroundSize = "260% 260%";
+      questionCard.style.borderTopColor = theme.accent;
+      document.getElementById("qCounter").style.background = theme.accent;
+      themeBadge.textContent = theme.name;
+      renderFloatingStickers(theme);
+    }
+
+    function loadQuestion() {
+      answered = false;
+      applyQuestionTheme(currentIndex);
+
+      const item = sessionQuestions[currentIndex];
+      qCounter.textContent = `Soal ${currentIndex + 1} / ${sessionQuestions.length}`;
+      questionText.textContent = item.q;
+      feedbackBox.className = "feedback-box";
+      feedbackBox.style.display = "none";
+
+      optionsGrid.innerHTML = "";
+      item.options.forEach((optText, idx) => {
+        const btn = document.createElement("button");
+        btn.className = `opt-btn opt-${idx}`;
+        btn.innerHTML = `
+          <span class="opt-icon">${CUTE_OPTION_ICONS[idx]}</span>
+          <span><span class="opt-letter">${OPTION_LETTERS[idx]}.</span> ${optText}</span>
+        `;
+        btn.addEventListener("click", () => selectAnswer(idx));
+        optionsGrid.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(chosenIdx) {
+      if (answered) return;
+      answered = true;
+
+      const item = sessionQuestions[currentIndex];
+      const isCorrect = chosenIdx === item.correct;
+      const allButtons = optionsGrid.querySelectorAll(".opt-btn");
+
+      allButtons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === item.correct) {
+          btn.classList.add("correct-highlight");
+        } else if (idx === chosenIdx && !isCorrect) {
+          btn.classList.add("wrong-highlight");
+        } else {
+          btn.classList.add("dimmed");
+        }
+      });
+
+      if (isCorrect) {
+        score += POINTS_PER_QUESTION;
+        correctCount += 1;
+        streak += 1;
+        if (streak > bestStreak) bestStreak = streak;
+
+        hudScore.textContent = score;
+        hudStreak.textContent = streak;
+        if (streak >= 2) streakPill.classList.add("hot");
+
+        const emoji = PRAISE_EMOJIS[Math.floor(Math.random() * PRAISE_EMOJIS.length)];
+        const template = PRAISE_MESSAGES[Math.floor(Math.random() * PRAISE_MESSAGES.length)];
+        const greeting = template.replace("{name}", playerName);
+
+        feedbackBox.className = "feedback-box correct show";
+        feedbackBox.style.display = "flex";
+        feedbackEmoji.textContent = emoji;
+        feedbackTitle.textContent = `Selamat, ${playerName}! (+${POINTS_PER_QUESTION} Poin)`;
+        feedbackSub.textContent = `${greeting} ${streak >= 2 ? `🔥 Streak ${streak}x beruntun!` : ""}`;
+
+        playTone("correct");
+        launchConfetti();
+      } else {
+        streak = 0;
+        hudStreak.textContent = "0";
+        streakPill.classList.remove("hot");
+
+        feedbackBox.className = "feedback-box wrong show";
+        feedbackBox.style.display = "flex";
+        feedbackEmoji.textContent = "🤗";
+        feedbackTitle.textContent = `Tetap semangat, ${playerName}!`;
+        feedbackSub.textContent = `Jawaban benar: ${OPTION_LETTERS[item.correct]}. ${item.options[item.correct]}`;
+
+        playTone("wrong");
+      }
+
+      reviewLog.push({
+        num: currentIndex + 1,
+        q: item.q,
+        chosenText: item.options[chosenIdx],
+        correctText: item.options[item.correct],
+        correctLetter: OPTION_LETTERS[item.correct],
+        isCorrect
+      });
+
+      nextBtn.textContent =
+        currentIndex === sessionQuestions.length - 1 ? "LIHAT HASIL 🏆" : "LANJUT YUK ➜";
+    }
+
+    function handleGlobalTimeout() {
+      clearUrgentEffects();
+      playTone("wrong");
+
+      for (let i = currentIndex; i < sessionQuestions.length; i++) {
+        if (i === currentIndex && answered) continue;
+        const item = sessionQuestions[i];
+        reviewLog.push({
+          num: i + 1,
+          q: item.q,
+          chosenText: "Waktu 45 menit habis",
+          correctText: item.options[item.correct],
+          correctLetter: OPTION_LETTERS[item.correct],
+          isCorrect: false
+        });
+      }
+      showResults(true);
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < sessionQuestions.length - 1) {
+        currentIndex += 1;
+        loadQuestion();
+      } else {
+        showResults(false);
+      }
+    });
+
+    function showResults(isTimeout = false) {
+      clearInterval(quizTimerInterval);
+      clearUrgentEffects();
+      document.body.style.background = "linear-gradient(135deg, #ff9a9e, #fecfef, #a1c4fd)";
+      document.body.style.backgroundSize = "260% 260%";
+
+      switchScreen(resultScreen);
+      document.getElementById("resultPlayerName").textContent = `Peserta Hebat: ${playerName}`;
+      document.getElementById("finalScore").textContent = `${score} Poin`;
+      document.getElementById("finalCorrect").textContent = `${correctCount} / ${sessionQuestions.length}`;
+      document.getElementById("finalStreak").textContent = `${bestStreak}x`;
+
+      const trophyEl = document.getElementById("resultTrophy");
+      const headlineEl = document.getElementById("resultHeadline");
+
+      if (isTimeout) {
+        trophyEl.textContent = "⏰";
+        headlineEl.textContent = `Waktu Habis, ${playerName}!`;
+      } else if (score >= 85) {
+        trophyEl.textContent = "🏆";
+        headlineEl.textContent = `Luar Biasa, ${playerName}!`;
+        launchConfetti();
+      } else if (score >= 60) {
+        trophyEl.textContent = "🌟";
+        headlineEl.textContent = `Keren Sekali, ${playerName}!`;
+        launchConfetti();
+      } else {
+        trophyEl.textContent = "💪";
+        headlineEl.textContent = `Tetap Semangat, ${playerName}!`;
+      }
+
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+      reviewLog.forEach((r) => {
+        const div = document.createElement("div");
+        div.className = `review-item ${r.isCorrect ? "" : "is-wrong"}`;
+        div.innerHTML = `
+          <div style="font-weight:800; margin-bottom:4px;">${r.isCorrect ? "✅" : "❌"} Soal ${r.num}: ${r.q}</div>
+          <div style="color:#475569;">Jawabanmu: <strong>${r.chosenText}</strong></div>
+          ${!r.isCorrect ? `<div style="color:#059669; font-weight:700; margin-top:2px;">Kunci: ${r.correctLetter}. ${r.correctText}</div>` : ""}
+        `;
+        reviewList.appendChild(div);
+      });
+    }
+
+    document.getElementById("replayBtn").addEventListener("click", () => {
+      switchScreen(startScreen);
+      playerNameInput.value = playerName;
+      playerNameInput.focus();
+    });
+
+    startBtn.addEventListener("click", startQuiz);
+    playerNameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") startQuiz();
+    });
+
+    renderFloatingStickers(CUTE_THEMES[0]);
+  </script>
+</body>
+</html>
